@@ -3,6 +3,7 @@ import { ReactNode, useState } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
+import router from 'next/router'
 
 // ** MUI Components
 import Button from '@mui/material/Button'
@@ -34,6 +35,11 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { api } from 'src/lib/axios'
+import Toast from 'src/components/Toast'
 
 // ** Styled Components
 const RegisterIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -87,9 +93,28 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
+const formDataSchema = z.object({
+  name: z.string().min(3, { message: 'Name is required' }),
+  email: z.string().email({ message: 'Invalid e-mail' }),
+  phone: z.string().min(11, { message: 'Invalid number' }).max(11, { message: 'Invalid number' }).nullable(),
+  password: z.string().min(6, { message: 'Password must have at least 6 characters' }),
+  agree: z.boolean().refine(data => data === true, {
+    message: 'You must agree to the terms and conditions'
+  })
+})
+
+type formDataType = {
+  name: string
+  email: string
+  phone?: string
+  password: string
+  agree: boolean
+}
+
 const Register = () => {
   // ** States
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showToast, setShowToast] = useState(false)
 
   // ** Hooks
   const theme = useTheme()
@@ -101,8 +126,40 @@ const Register = () => {
 
   const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isLoading }
+  } = useForm<formDataType>({
+    resolver: zodResolver(formDataSchema)
+  })
+
+  async function handleSignUp(data: formDataType): Promise<void> {
+    try {
+      const res = await api.post('/api/auth/create', {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password
+      })
+
+      if (res.status === 201) {
+        setShowToast(true)
+        setTimeout(() => {
+          router.push('/login')
+        }, 2200)
+      }
+
+      // Adicione aqui qualquer lógica que você deseja executar após o sucesso da requisição
+    } catch (error) {
+      // Trate os erros aqui
+      console.error('Erro ao cadastrar usuário:', error)
+    }
+  }
+
   return (
     <Box className='content-right'>
+      {showToast && <Toast title='Created' description='User created successfully!' />}
       {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <RegisterIllustrationWrapper>
@@ -212,14 +269,39 @@ const Register = () => {
               <TypographyStyled variant='h5'>Adventure starts here 🚀</TypographyStyled>
               <Typography variant='body2'>Make your app management easy and fun!</Typography>
             </Box>
-            <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-              <TextField autoFocus fullWidth sx={{ mb: 4 }} label='Username' placeholder='johndoe' />
-              <TextField fullWidth label='Email' sx={{ mb: 4 }} placeholder='user@email.com' />
+            <form noValidate autoComplete='off' onSubmit={handleSubmit(handleSignUp)}>
+              <TextField
+                {...register('name')}
+                autoFocus
+                fullWidth
+                sx={{ mb: 4 }}
+                label='Name'
+                error={!!errors.name}
+                placeholder='Vinicius Caetano'
+              />
+              <TextField
+                {...register('email')}
+                fullWidth
+                label='Email'
+                error={!!errors.email}
+                sx={{ mb: 4 }}
+                placeholder='gainagencia@develop.com'
+              />
+              <TextField
+                {...register('phone')}
+                fullWidth
+                label='Phone'
+                sx={{ mb: 4 }}
+                error={!!errors.phone}
+                placeholder='62 999999999'
+              />
               <FormControl fullWidth>
                 <InputLabel htmlFor='auth-login-v2-password'>Password</InputLabel>
                 <OutlinedInput
+                  {...register('password')}
                   label='Password'
                   id='auth-login-v2-password'
+                  error={!!errors.password}
                   type={showPassword ? 'text' : 'password'}
                   endAdornment={
                     <InputAdornment position='end'>
@@ -235,11 +317,11 @@ const Register = () => {
                 />
               </FormControl>
               <FormControlLabel
-                control={<Checkbox />}
+                control={<Checkbox {...register('agree')} sx={{ ...(errors.agree && { color: 'red' }) }} />}
                 sx={{ mb: 4, mt: 1.5, '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
                 label={
                   <>
-                    <Typography variant='body2' component='span'>
+                    <Typography variant='body2' component='span' sx={{ ...(errors.agree && { color: 'red' }) }}>
                       I agree to{' '}
                     </Typography>
                     <LinkStyled href='/' onClick={e => e.preventDefault()}>
@@ -248,7 +330,7 @@ const Register = () => {
                   </>
                 }
               />
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
+              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }} disabled={isLoading}>
                 Sign up
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
