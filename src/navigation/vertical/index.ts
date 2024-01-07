@@ -4,22 +4,15 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 const navigation = (): VerticalNavItemsType => {
   return [
     {
-      title: 'Dashboards',
+      title: 'Dashboard',
       icon: 'mdi:home-outline',
-      badgeContent: 'new',
+
+      // badgeContent: 'new',
       badgeColor: 'error',
       children: [
         {
-          title: 'CRM',
-          path: '/dashboards/crm'
-        },
-        {
           title: 'Analytics',
           path: '/dashboards/analytics'
-        },
-        {
-          title: 'eCommerce',
-          path: '/dashboards/ecommerce'
         }
       ]
     },
@@ -27,9 +20,9 @@ const navigation = (): VerticalNavItemsType => {
       sectionTitle: 'Meus aprendizados'
     },
     {
-      title: 'cursos',
+      title: 'Cursos',
       path: '/smc'
-    },
+    }
 
     // {
     //   title: 'Chat',

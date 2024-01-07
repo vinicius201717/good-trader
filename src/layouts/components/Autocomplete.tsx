@@ -20,11 +20,8 @@ import ListItemButton from '@mui/material/ListItemButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiAutocomplete, { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 
-// ** Third Party Imports
-import axios from 'axios'
-
 // ** Types Imports
-import { AppBarSearchType } from 'src/@fake-db/types'
+import { AppBarSearchType } from 'src/types/apps/appTyes'
 import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Icon Imports
@@ -32,6 +29,7 @@ import Icon from 'src/@core/components/icon'
 
 // ** Configs Imports
 import themeConfig from 'src/configs/themeConfig'
+import { handleSearchData } from 'src/utils/app-bar-search'
 
 interface Props {
   hidden: boolean
@@ -69,9 +67,9 @@ const defaultSuggestionsData: DefaultSuggestionsType[] = [
         icon: 'mdi:poll',
         suggestion: 'Analytics',
         link: '/dashboards/analytics'
-      },
+      }
     ]
-  },
+  }
 ]
 
 const categoryTitle: { [k: string]: string } = {
@@ -292,17 +290,10 @@ const AutocompleteComponent = ({ hidden, settings }: Props) => {
 
   // Get all data using API
   useEffect(() => {
-    axios
-      .get('/app-bar/search', {
-        params: { q: searchValue }
-      })
-      .then(response => {
-        if (response.data && response.data.length) {
-          setOptions(response.data)
-        } else {
-          setOptions([])
-        }
-      })
+
+    const data = handleSearchData(searchValue) 
+    setOptions(data)
+    
   }, [searchValue])
 
   useEffect(() => {

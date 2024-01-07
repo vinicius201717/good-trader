@@ -26,3 +26,4 @@ export type ProjectListDataType = {
   progressValue: number
   progressColor: ThemeColor
 }
+

@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next/types'
 import { prisma } from 'src/lib/prisma'
 import bcrypt from 'bcrypt'
 import jwt, { Secret } from 'jsonwebtoken'
-import { setCookie } from 'nookies'
 
 export default async function handleLogin(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -36,13 +35,13 @@ export default async function handleLogin(req: NextApiRequest, res: NextApiRespo
 
     const token = jwt.sign(payload, jwtSecret, { expiresIn: jwtExpiration })
 
-    setCookie({ res }, 'token', token, {
-      maxAge: 30 * 24 * 60 * 60, // 30 dias em segundos
-      path: '/'
-    })
-
     const { password: _unused, ...user } = response
 
-    res.send({ user, accessToken: token })
+    const data = { ...user, role: 'client' }
+
+    res.send({
+      userData:  data ,
+      accessToken: token
+    })
   } catch (error) {}
 }
