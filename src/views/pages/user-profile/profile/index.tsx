@@ -8,20 +8,37 @@ import ActivityTimeline from 'src/views/pages/user-profile/profile/ActivityTimel
 import ConnectionsTeams from 'src/views/pages/user-profile/profile/ConnectionsTeams'
 
 // ** Types
-import { ProfileTabType } from 'src/@fake-db/types'
+import { ProfileTabType } from 'src/types/apps/userTypes'
 
 const ProfileTab = ({ data }: { data: ProfileTabType }) => {
+  console.log(data)
+
   return data && Object.values(data).length ? (
     <Grid container spacing={6}>
       <Grid item lg={4} md={5} xs={12}>
-        <AboutOverivew about={data.about} contacts={data.contacts} teams={data.teams} overview={data.overview} />
+        <AboutOverivew
+          about={[{ property: 'Full Name', value: 'John Doe', icon: 'mdi:account-outline' }]}
+          contacts={[{ property: 'Contact', value: '(123) 456-7890', icon: 'mdi:phone-outline' }]}
+          teams={[{ property: 'Backend Developer', value: '(126 Members)', icon: 'mdi:github', color: 'primary' }]}
+          overview={[{ property: 'Task Compiled', value: '13.5k', icon: 'mdi:check' }]}
+        />
       </Grid>
       <Grid item lg={8} md={7} xs={12}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <ActivityTimeline />
           </Grid>
-          <ConnectionsTeams connections={data.connections} teams={data.teamsTech} />
+          <ConnectionsTeams
+            connections={[
+              {
+                isFriend: false,
+                connections: '45',
+                name: 'Cecilia Payne',
+                avatar: '/images/avatars/2.png'
+              }
+            ]}
+            teams={data.teamsTech}
+          />
           <Grid item xs={12}>
             <ProjectsTable />
           </Grid>

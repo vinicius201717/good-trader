@@ -16,9 +16,7 @@ import CardContent from '@mui/material/CardContent'
 import Icon from 'src/@core/components/icon'
 
 // ** Types
-import { TeamsTabType } from 'src/@fake-db/types'
-
-// ** Custom Components Imports
+import { TeamsTabType } from 'src/types/apps/userTypes'
 import CustomChip from 'src/@core/components/mui/chip'
 import OptionsMenu from 'src/@core/components/option-menu'
 

@@ -17,13 +17,7 @@ import MuiTabList, { TabListProps } from '@mui/lab/TabList'
 import CircularProgress from '@mui/material/CircularProgress'
 
 // ** Type Import
-import {
-  TeamsTabType,
-  ProfileTabType,
-  ProjectsTabType,
-  ConnectionsTabType,
-  UserProfileActiveTab
-} from 'src/@fake-db/types'
+import { TeamsTabType, ProfileTabType } from 'src/types/apps/userTypes'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -31,8 +25,6 @@ import Icon from 'src/@core/components/icon'
 // ** Demo Components
 import Teams from 'src/views/pages/user-profile/teams'
 import Profile from 'src/views/pages/user-profile/profile'
-import Projects from 'src/views/pages/user-profile/projects'
-import Connections from 'src/views/pages/user-profile/connections'
 import UserProfileHeader from 'src/views/pages/user-profile/UserProfileHeader'
 
 const TabList = styled(MuiTabList)<TabListProps>(({ theme }) => ({
@@ -55,7 +47,7 @@ const TabList = styled(MuiTabList)<TabListProps>(({ theme }) => ({
   }
 }))
 
-const UserProfile = ({ tab, data }: { tab: string; data: UserProfileActiveTab }) => {
+const UserProfile = ({ tab, data }: { tab: string; data: any }) => {
   // ** State
   const [activeTab, setActiveTab] = useState<string>(tab)
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -90,9 +82,7 @@ const UserProfile = ({ tab, data }: { tab: string; data: UserProfileActiveTab })
 
   const tabContentList: { [key: string]: ReactElement } = {
     profile: <Profile data={data as ProfileTabType} />,
-    teams: <Teams data={data as TeamsTabType[]} />,
-    projects: <Projects data={data as ProjectsTabType[]} />,
-    connections: <Connections data={data as ConnectionsTabType[]} />
+    teams: <Teams data={data as TeamsTabType[]} />
   }
 
   return (
@@ -126,24 +116,6 @@ const UserProfile = ({ tab, data }: { tab: string; data: UserProfileActiveTab })
                       <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                         <Icon fontSize={20} icon='mdi:account-multiple-outline' />
                         {!hideText && 'Teams'}
-                      </Box>
-                    }
-                  />
-                  <Tab
-                    value='projects'
-                    label={
-                      <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
-                        <Icon fontSize={20} icon='mdi:view-grid-outline' />
-                        {!hideText && 'Projects'}
-                      </Box>
-                    }
-                  />
-                  <Tab
-                    value='connections'
-                    label={
-                      <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
-                        <Icon fontSize={20} icon='mdi:link' />
-                        {!hideText && 'Connections'}
                       </Box>
                     }
                   />

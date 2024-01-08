@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent'
 import Icon from 'src/@core/components/icon'
 
 // ** Types
-import { ProfileTeamsType, ProfileTabCommonType } from 'src/@fake-db/types'
+import { ProfileTeamsType, ProfileTabCommonType } from 'src/types/apps/userTypes'
 
 interface Props {
   teams: ProfileTeamsType[]

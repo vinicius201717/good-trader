@@ -1,41 +1,38 @@
 // ** Next Import
-import { GetStaticProps, GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next/types'
+// import { GetStaticProps, GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next/types'
 
 // ** Third Party Imports
-import axios from 'axios'
+// import { api } from 'src/lib/axios'
 
 // ** Demo Components Imports
 import UserProfile from 'src/views/pages/user-profile/UserProfile'
 
-// ** Types
-import { UserProfileActiveTab } from 'src/@fake-db/types'
+//{ tab, data }: InferGetStaticPropsType<typeof getStaticProps>
 
-const UserProfileTab = ({ tab, data }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  return <UserProfile tab={tab} data={data} />
+const UserProfileTab = () => {
+  return <UserProfile tab={'profile'} data={'data'} />
 }
 
-export const getStaticPaths: GetStaticPaths = () => {
-  return {
-    paths: [
-      { params: { tab: 'profile' } },
-      { params: { tab: 'teams' } },
-      { params: { tab: 'projects' } },
-      { params: { tab: 'connections' } }
-    ],
-    fallback: false
-  }
-}
+// export const getStaticPaths: GetStaticPaths = () => {
+//   return {
+//     paths: [
+//       { params: { tab: 'profile' } },
+//       { params: { tab: 'teams' } },
+//     ],
+//     fallback: false
+//   }
+// }
 
-export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {
-  const res = await axios.get('/pages/profile', { params: { tab: params?.tab } })
-  const data: UserProfileActiveTab = res.data
+// export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {
+//   const res = await api.get('/auth/me', { params: { tab: params?.tab } })
+//   const data: any = res.data
 
-  return {
-    props: {
-      data,
-      tab: params?.tab
-    }
-  }
-}
+//   return {
+//     props: {
+//       data,
+//       tab: params?.tab
+//     }
+//   }
+// }
 
 export default UserProfileTab
