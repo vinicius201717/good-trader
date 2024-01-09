@@ -10,7 +10,7 @@ import UserProfile from 'src/views/pages/user-profile/UserProfile'
 //{ tab, data }: InferGetStaticPropsType<typeof getStaticProps>
 
 const UserProfileTab = () => {
-  return <UserProfile tab={'profile'} data={'data'} />
+  return <UserProfile />
 }
 
 // export const getStaticPaths: GetStaticPaths = () => {

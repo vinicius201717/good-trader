@@ -27,12 +27,15 @@
       "apexcharts/*": [
         "./node_modules/apexcharts-clevision/*"
       ],
+      "*.jpg": [
+        "src/assets/*.jpg"
+      ]
     }
   },
   "include": [
     "src",
     "declaration.d.ts"
-  ],
+, "public/images/declaragions.d.ts"  ],
   "exclude": [
     "node_modules"
   ]

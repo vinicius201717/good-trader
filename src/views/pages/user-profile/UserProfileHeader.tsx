@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 
 // ** MUI Components
 import Box from '@mui/material/Box'
@@ -10,14 +10,11 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 
-// ** Third Party Imports
-import axios from 'axios'
-
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
 // ** Types
-import { ProfileHeaderType } from 'src/@fake-db/types'
+// import { ProfileHeaderType } from 'src/types/apps/userTypes'
 
 const ProfilePicture = styled('img')(({ theme }) => ({
   width: 120,
@@ -31,22 +28,16 @@ const ProfilePicture = styled('img')(({ theme }) => ({
 
 const UserProfileHeader = () => {
   // ** State
-  const [data, setData] = useState<ProfileHeaderType | null>(null)
+  // const [data, setData] = useState<ProfileHeaderType | null>(null)
 
-  useEffect(() => {
-    axios.get('/pages/profile-header').then(response => {
-      setData(response.data)
-    })
-  }, [])
+  const designationIcon = 'mdi:briefcase-outline'
 
-  const designationIcon = data?.designationIcon || 'mdi:briefcase-outline'
-
-  return data !== null ? (
+  return (
     <Card>
       <CardMedia
         component='img'
         alt='profile-header'
-        image={data.coverImg}
+        image={'/images/banners/banner-2.jpg'}
         sx={{
           height: { xs: 150, md: 250 }
         }}
@@ -61,7 +52,7 @@ const UserProfileHeader = () => {
           justifyContent: { xs: 'center', md: 'flex-start' }
         }}
       >
-        <ProfilePicture src={data.profileImg} alt='profile-picture' />
+        <ProfilePicture src={'/images/avatars/6.png'} alt='profile-picture' />
         <Box
           sx={{
             width: '100%',
@@ -74,7 +65,7 @@ const UserProfileHeader = () => {
         >
           <Box sx={{ mb: [6, 0], display: 'flex', flexDirection: 'column', alignItems: ['center', 'flex-start'] }}>
             <Typography variant='h5' sx={{ mb: 4 }}>
-              {data.fullName}
+              Vinicius Caetano de Sousa
             </Typography>
             <Box
               sx={{
@@ -85,16 +76,16 @@ const UserProfileHeader = () => {
             >
               <Box sx={{ mr: 5, display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                 <Icon icon={designationIcon} />
-                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>{data.designation}</Typography>
+                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>Development</Typography>
               </Box>
               <Box sx={{ mr: 5, display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                 <Icon icon='mdi:map-marker-outline' />
-                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>{data.location}</Typography>
+                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>Aparecida de Goiânia</Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                 <Icon icon='mdi:calendar-blank' />
                 <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>
-                  Joined {data.joiningDate}
+                  19/05/2023
                 </Typography>
               </Box>
             </Box>
@@ -105,7 +96,7 @@ const UserProfileHeader = () => {
         </Box>
       </CardContent>
     </Card>
-  ) : null
+  )
 }
 
 export default UserProfileHeader

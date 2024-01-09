@@ -19,10 +19,10 @@ import CustomChip from 'src/@core/components/mui/chip'
 import OptionsMenu from 'src/@core/components/option-menu'
 
 // ** Types
-import { ProfileTeamsTechType, ProfileConnectionsType } from 'src/@fake-db/types'
+import { ProfileTeamsTechType, ProfileConnectionsType } from 'src/types/apps/userTypes'
 
 interface Props {
-  teams: ProfileTeamsTechType[]
+  teams:any
   connections: ProfileConnectionsType[]
 }
 
@@ -97,7 +97,7 @@ const ConnectionsTeams = ({ connections, teams }: Props) => {
           />
           <CardContent>
             {teams &&
-              teams.map((team: ProfileTeamsTechType, index) => {
+              teams.map((team: ProfileTeamsTechType, index: any) => {
                 return (
                   <Box
                     key={index}

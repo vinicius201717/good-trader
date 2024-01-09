@@ -16,23 +16,29 @@ import CardContent from '@mui/material/CardContent'
 import Icon from 'src/@core/components/icon'
 
 // ** Types
-import { TeamsTabType } from 'src/types/apps/userTypes'
+// import { TeamsTabType } from 'src/types/apps/userTypes'
 import CustomChip from 'src/@core/components/mui/chip'
 import OptionsMenu from 'src/@core/components/option-menu'
 
-const Teams = ({ data }: { data: TeamsTabType[] }) => {
+const dataFake = [
+  { title: 'teste', description: 'teste' },
+  { title: 'teste1', description: 'teste' },
+  { title: 'teste3', description: 'teste3' }
+]
+
+const Teams = () => {
   return (
     <Grid container spacing={6}>
-      {data &&
-        Array.isArray(data) &&
-        data.map((item, index) => {
+      {dataFake &&
+        Array.isArray(dataFake) &&
+        dataFake.map((item, index) => {
           return (
             <Grid key={index} item xs={12} md={6} lg={4}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Avatar src={item.avatar} sx={{ mr: 2.5, height: 38, width: 38 }} />
+                      <Avatar src={'/image/avattars/02.png'} sx={{ mr: 2.5, height: 38, width: 38 }} />
                       <Typography variant='h6'>{item.title}</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -55,19 +61,15 @@ const Teams = ({ data }: { data: TeamsTabType[] }) => {
                   <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <AvatarGroup className='pull-up' sx={{ zIndex: 1, alignItems: 'center' }}>
-                        {item.avatarGroup.map((person, index) => {
-                          return (
-                            <Tooltip key={index} title={person.name}>
-                              <Avatar src={person.avatar} alt={person.name} sx={{ height: 32, width: 32 }} />
-                            </Tooltip>
-                          )
-                        })}
+                        <Tooltip key={index} title={'Vinicius'}>
+                          <Avatar src={'/image/avattars/02.png'} alt={'Vinicius'} sx={{ height: 32, width: 32 }} />
+                        </Tooltip>
                       </AvatarGroup>
-                      <Avatar sx={{ ml: -1, height: 32, width: 32, fontSize: '1rem' }}>+{item.extraMembers}</Avatar>
+                      <Avatar sx={{ ml: -1, height: 32, width: 32, fontSize: '1rem' }}>+{1000}</Avatar>
                     </Box>
                     <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
-                      {item.chips &&
-                        item.chips.map((chip, index) => (
+                      {dataFake &&
+                        dataFake.map((chip, index) => (
                           <Box
                             href='/'
                             key={index}
@@ -79,7 +81,7 @@ const Teams = ({ data }: { data: TeamsTabType[] }) => {
                               '& .MuiChip-root': { cursor: 'pointer' }
                             }}
                           >
-                            <CustomChip size='small' skin='light' color={chip.color} label={chip.title} />
+                            <CustomChip size='small' skin='light' color={'success'} label={chip.title} />
                           </Box>
                         ))}
                     </Box>

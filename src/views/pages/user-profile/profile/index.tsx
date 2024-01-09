@@ -8,12 +8,11 @@ import ActivityTimeline from 'src/views/pages/user-profile/profile/ActivityTimel
 import ConnectionsTeams from 'src/views/pages/user-profile/profile/ConnectionsTeams'
 
 // ** Types
-import { ProfileTabType } from 'src/types/apps/userTypes'
+// import { ProfileTabType } from 'src/types/apps/userTypes'
 
-const ProfileTab = ({ data }: { data: ProfileTabType }) => {
-  console.log(data)
+const ProfileTab = () => {
 
-  return data && Object.values(data).length ? (
+  return (
     <Grid container spacing={6}>
       <Grid item lg={4} md={5} xs={12}>
         <AboutOverivew
@@ -37,7 +36,7 @@ const ProfileTab = ({ data }: { data: ProfileTabType }) => {
                 avatar: '/images/avatars/2.png'
               }
             ]}
-            teams={data.teamsTech}
+            teams={'data.teamsTech'}
           />
           <Grid item xs={12}>
             <ProjectsTable />
@@ -45,7 +44,7 @@ const ProfileTab = ({ data }: { data: ProfileTabType }) => {
         </Grid>
       </Grid>
     </Grid>
-  ) : null
+  )
 }
 
 export default ProfileTab

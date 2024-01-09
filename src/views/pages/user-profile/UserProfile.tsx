@@ -8,21 +8,24 @@ import { useRouter } from 'next/router'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 import Typography from '@mui/material/Typography'
 import { styled, Theme } from '@mui/material/styles'
+
 import useMediaQuery from '@mui/material/useMediaQuery'
 import MuiTabList, { TabListProps } from '@mui/lab/TabList'
+
 import CircularProgress from '@mui/material/CircularProgress'
 
 // ** Type Import
-import { TeamsTabType, ProfileTabType } from 'src/types/apps/userTypes'
+// import { TeamsTabType, ProfileTabType } from 'src/types/apps/userTypes'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
-// ** Demo Components
+// // ** Demo Components
 import Teams from 'src/views/pages/user-profile/teams'
 import Profile from 'src/views/pages/user-profile/profile'
 import UserProfileHeader from 'src/views/pages/user-profile/UserProfileHeader'
@@ -47,12 +50,13 @@ const TabList = styled(MuiTabList)<TabListProps>(({ theme }) => ({
   }
 }))
 
-const UserProfile = ({ tab, data }: { tab: string; data: any }) => {
+const UserProfile = () => {
   // ** State
-  const [activeTab, setActiveTab] = useState<string>(tab)
+  const [activeTab, setActiveTab] = useState<string>()
+
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  // ** Hooks
+  // // ** Hooks
   const router = useRouter()
   const hideText = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
@@ -67,22 +71,28 @@ const UserProfile = ({ tab, data }: { tab: string; data: any }) => {
   }
 
   useEffect(() => {
-    if (data) {
+    if (true) {
       setIsLoading(false)
     }
-  }, [data])
+  }, [])
 
   useEffect(() => {
-    if (tab && tab !== activeTab) {
-      setActiveTab(tab)
+    if (activeTab && activeTab !== activeTab) {
+      setActiveTab(activeTab)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tab])
+  }, [activeTab])
+
+  // APOS A CONSULTA DE DADOS FAZER UMA NOVA TIPAGEM PRA PROFILETABTYPE E TEAMSTABTYPE[]
+  // const tabContentList: { [key: string]: ReactElement } = {
+  //   profile: <Profile data={data as ProfileTabType} />,
+  //   teams: <Teams data={data as TeamsTabType[]} />
+  // }
 
   const tabContentList: { [key: string]: ReactElement } = {
-    profile: <Profile data={data as ProfileTabType} />,
-    teams: <Teams data={data as TeamsTabType[]} />
+    profile: <Profile />,
+    teams: <Teams />
   }
 
   return (
