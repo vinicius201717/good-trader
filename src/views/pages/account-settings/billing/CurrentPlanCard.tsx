@@ -22,16 +22,13 @@ import LinearProgress from '@mui/material/LinearProgress'
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
-// ** Types
-import { PricingPlanType } from 'src/@core/components/plan-details/types'
-
 // ** Custom Components Imports
 import CustomChip from 'src/@core/components/mui/chip'
 
 // ** Component Import
 import PricingPlans from 'src/views/pages/pricing/PricingPlans'
 
-const CurrentPlanCard = ({ data }: { data: PricingPlanType[] }) => {
+const CurrentPlanCard = () => {
   // ** State
   const [open, setOpen] = useState<boolean>(false)
   const [userInput, setUserInput] = useState<string>('yes')
@@ -249,7 +246,7 @@ const CurrentPlanCard = ({ data }: { data: PricingPlanType[] }) => {
               Annually
             </InputLabel>
           </Box>
-          <PricingPlans data={data} plan={plan} />
+          <PricingPlans plan={plan} />
         </DialogContent>
       </Dialog>
     </>
