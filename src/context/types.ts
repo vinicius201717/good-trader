@@ -7,13 +7,12 @@ export type LoginParams = {
 }
 
 export type UserDataType = {
-  id: number
-  role: string
+  id: string
+  created_at: string
   email: string
-  fullName: string
-  username: string
-  password: string
-  avatar?: string | null
+  name: string
+  phone: string
+  role: string
 }
 
 export type AuthValuesType = {

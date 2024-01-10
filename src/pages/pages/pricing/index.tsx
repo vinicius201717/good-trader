@@ -1,8 +1,5 @@
 // ** React Imports
-import { useState, ChangeEvent } from 'react'
-
-// ** Next Imports
-import { GetStaticProps, InferGetStaticPropsType } from 'next/types'
+import { useState, ChangeEvent, useEffect } from 'react'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -10,7 +7,7 @@ import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import axios from 'axios'
+import { api } from 'src/lib/axios'
 
 // ** Types
 import { PricingDataType } from 'src/@core/components/plan-details/types'
@@ -33,9 +30,31 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   }
 }))
 
-const Pricing = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  // ** States
+const Pricing = () => {
   const [plan, setPlan] = useState<'monthly' | 'annually'>('annually')
+  const [data, setData] = useState<PricingDataType | null>(null)
+
+  useEffect(() => {
+    let isMounted = true
+    const fetchData = async () => {
+      try {
+        const res = await api.get('/pricing/plans')
+        const apiData: PricingDataType = res.data
+
+        if (isMounted) {
+          setData(apiData)
+        }
+      } catch (error) {
+        console.error('Erro na chamada Axios:', error)
+      }
+    }
+
+    fetchData()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const handleChange = (e: ChangeEvent<{ checked: boolean }>) => {
     if (e.target.checked) {
@@ -45,32 +64,24 @@ const Pricing = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =>
     }
   }
 
+  // Verifica se data é nulo antes de acessar suas propriedades
+  const pricingPlans = data?.pricingPlans || []
+
   return (
     <Card>
       <CardContent>
         <PricingHeader plan={plan} handleChange={handleChange} />
-        <PricingPlans plan={plan} data={apiData.pricingPlans} />
+        <PricingPlans plan={plan} data={pricingPlans} />
       </CardContent>
       <PricingCTA />
       <CardContent>
-        <PricingTable data={apiData} />
+        <PricingTable data={data} />
       </CardContent>
       <CardContent sx={{ backgroundColor: 'action.hover' }}>
-        <PricingFooter data={apiData} />
+        <PricingFooter data={data} />
       </CardContent>
     </Card>
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await axios.get('/pages/pricing')
-  const apiData: PricingDataType = res.data
-
-  return {
-    props: {
-      apiData
-    }
-  }
 }
 
 export default Pricing

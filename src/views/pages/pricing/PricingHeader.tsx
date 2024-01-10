@@ -17,6 +17,8 @@ import CustomChip from 'src/@core/components/mui/chip'
 
 interface Props {
   plan: string
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleChange: (e: ChangeEvent<{ checked: boolean }>) => void
 }
 

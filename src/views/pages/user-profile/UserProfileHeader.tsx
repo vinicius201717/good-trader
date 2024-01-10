@@ -12,6 +12,8 @@ import CardContent from '@mui/material/CardContent'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
+import { UserDataType } from 'src/context/types'
+import Link from 'next/link'
 
 // ** Types
 // import { ProfileHeaderType } from 'src/types/apps/userTypes'
@@ -26,7 +28,11 @@ const ProfilePicture = styled('img')(({ theme }) => ({
   }
 }))
 
-const UserProfileHeader = () => {
+type UserProfileHeaderProps = {
+  userData: UserDataType
+}
+
+const UserProfileHeader = ({ userData }: UserProfileHeaderProps) => {
   // ** State
   // const [data, setData] = useState<ProfileHeaderType | null>(null)
 
@@ -65,7 +71,7 @@ const UserProfileHeader = () => {
         >
           <Box sx={{ mb: [6, 0], display: 'flex', flexDirection: 'column', alignItems: ['center', 'flex-start'] }}>
             <Typography variant='h5' sx={{ mb: 4 }}>
-              Vinicius Caetano de Sousa
+              {userData.name}
             </Typography>
             <Box
               sx={{
@@ -84,15 +90,15 @@ const UserProfileHeader = () => {
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                 <Icon icon='mdi:calendar-blank' />
-                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>
-                  19/05/2023
-                </Typography>
+                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>19/05/2023</Typography>
               </Box>
             </Box>
           </Box>
-          <Button variant='contained' startIcon={<Icon icon='mdi:account-check-outline' fontSize={20} />}>
-            Connected
-          </Button>
+          <Link href='/pages/account-settings/account/'>
+            <Button variant='contained' startIcon={<Icon icon='mdi:cog' fontSize={20} />}>
+              Settings
+            </Button>
+          </Link>
         </Box>
       </CardContent>
     </Card>

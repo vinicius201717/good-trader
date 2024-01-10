@@ -1,14 +1,18 @@
 import { Grid } from '@mui/material'
 import UserProfileHeader from './UserProfileHeader'
 import ProfileTab from './profile'
+import { UserDataType } from 'src/context/types'
 
-const UserProfile = () => {
+interface UserProfileProps {
+  userData: UserDataType
+}
+const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <UserProfileHeader />
+        <UserProfileHeader userData={userData} />
       </Grid>
-      <ProfileTab />
+      <ProfileTab userData={userData} />
     </Grid>
   )
 }

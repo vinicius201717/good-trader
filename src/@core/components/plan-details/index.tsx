@@ -36,15 +36,21 @@ const PlanDetails = (props: PricingPlanProps) => {
   // ** Props
   const { plan, data } = props
 
+  if (!data || data === undefined) {
+    return <h1>Falha de serviço</h1>
+  }
+
   const renderFeatures = () => {
-    return data?.planBenefits.map((item: string, index: number) => (
-      <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box component='span' sx={{ display: 'inline-flex', color: 'text.secondary', mr: 2 }}>
-          <Icon icon='mdi:circle-outline' fontSize='0.75rem' />
-        </Box>
-        <Typography variant='body2'>{item}</Typography>
-      </Box>
-    ))
+    return data.planBenefits
+      ? data.planBenefits.map((item: string, index: number) => (
+          <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box component='span' sx={{ display: 'inline-flex', color: 'text.secondary', mr: 2 }}>
+              <Icon icon='mdi:circle-outline' fontSize='0.75rem' />
+            </Box>
+            <Typography variant='body2'>{item}</Typography>
+          </Box>
+        ))
+      : null
   }
 
   return (
@@ -79,7 +85,7 @@ const PlanDetails = (props: PricingPlanProps) => {
           width={data?.imgWidth}
           src={`${data?.imgSrc}`}
           height={data?.imgHeight}
-          alt={`${data?.title.toLowerCase().replace(' ', '-')}-plan-img`}
+          alt={data && data.title ? data.title.toLowerCase().replace(' ', '-') + '-plan-img' : 'plan-img'}
         />
       </Box>
       <Box sx={{ textAlign: 'center' }}>
@@ -93,7 +99,7 @@ const PlanDetails = (props: PricingPlanProps) => {
               $
             </Typography>
             <Typography variant='h3' sx={{ fontWeight: 600, color: 'primary.main', lineHeight: 1.17 }}>
-              {plan === 'monthly' ? data?.monthlyPrice : data?.yearlyPlan.perMonth}
+              {plan === 'monthly' ? data && data.monthlyPrice : data && data.yearlyPlan && data.yearlyPlan.perMonth}
             </Typography>
             <Typography variant='body2' sx={{ mb: 1.6, fontWeight: 600, alignSelf: 'flex-end' }}>
               /month
@@ -103,7 +109,7 @@ const PlanDetails = (props: PricingPlanProps) => {
             <Typography
               variant='caption'
               sx={{ top: 50, left: '50%', position: 'absolute', transform: 'translateX(-50%)' }}
-            >{`USD ${data?.yearlyPlan.totalAnnual}/year`}</Typography>
+            >{`USD ${data?.yearlyPlan?.totalAnnual ? data?.yearlyPlan.totalAnnual : null}/year`}</Typography>
           ) : null}
         </Box>
       </Box>

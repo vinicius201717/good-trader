@@ -33,6 +33,8 @@ const PricingFooter = (props: Props) => {
   // ** Props
   const { data } = props
 
+  const faqItems = data?.faq || []
+
   // ** Props
   const [expanded, setExpanded] = useState<string | false>(false)
 
@@ -41,7 +43,7 @@ const PricingFooter = (props: Props) => {
   }
 
   const renderAccordion = () => {
-    return data?.faq.map((item: PricingFaqType) => {
+    return faqItems.map((item: PricingFaqType) => {
       return (
         <Accordion key={item.id} elevation={0} expanded={expanded === item.id} onChange={handleChange(item.id)}>
           <AccordionSummary

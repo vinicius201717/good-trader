@@ -167,4 +167,3 @@ export type ProfileTabType = {
   connections: ProfileConnectionsType[]
 }
 export type UserProfileActiveTab = ProfileTabType | TeamsTabType[] | ProjectsTabType[] | ConnectionsTabType[]
-
