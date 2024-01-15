@@ -70,7 +70,7 @@ const notifications: NotificationsType[] = [
 
 const shortcuts: ShortcutsType[] = [
   {
-    title: 'Calendar',
+    title: 'teste',
     url: '/apps/calendar',
     subtitle: 'Appointments',
     icon: 'mdi:calendar-month-outline'

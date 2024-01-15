@@ -160,7 +160,7 @@ const ShortcutsDropdown = (props: Props) => {
                   <CustomAvatar skin='light' color='secondary' sx={{ mb: 2, width: 50, height: 50 }}>
                     <Icon icon={shortcut.icon} />
                   </CustomAvatar>
-                  <Typography sx={{ fontWeight: 600, color: 'text.secondary' }}>{shortcut.title}</Typography>
+                  <Typography sx={{ fontWeight: 600, color: 'text.secondary' }}>{shortcut.title }</Typography>
                   <Typography variant='body2' sx={{ color: 'text.disabled' }}>
                     {shortcut.subtitle}
                   </Typography>

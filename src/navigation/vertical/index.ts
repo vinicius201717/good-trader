@@ -20,8 +20,9 @@ const navigation = (): VerticalNavItemsType => {
       sectionTitle: 'Meus aprendizados'
     },
     {
-      title: 'Cursos',
-      path: '/smc'
+      title: 'Courses',
+      path: '/courses',
+      icon: 'fluent:learning-app-20-regular'
     }
 
     // {

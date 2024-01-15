@@ -15,8 +15,8 @@ const navigation = (): HorizontalNavItemsType => {
       ]
     },
     {
-      title: 'Cursos',
-      path: '/smc'
+      title: 'Courses',
+      path: '/courses'
     }
 
     // {
