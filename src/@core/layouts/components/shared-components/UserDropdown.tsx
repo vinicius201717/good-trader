@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, SyntheticEvent, Fragment } from 'react'
+import { useState, SyntheticEvent, Fragment, useContext } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import { AuthContext } from 'src/context/AuthContext'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -37,8 +38,11 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 }))
 
 const UserDropdown = (props: Props) => {
+  
+  const {user} = useContext(AuthContext)
+
   // ** Props
-  const { settings } = props
+  const { settings } = props  
 
   // ** States
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
@@ -121,10 +125,7 @@ const UserDropdown = (props: Props) => {
               <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>John Doe</Typography>
-              <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                Admin
-              </Typography>
+              <Typography sx={{ fontWeight: 600 }}>{user?.name}</Typography>
             </Box>
           </Box>
         </Box>

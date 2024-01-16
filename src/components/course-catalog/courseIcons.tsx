@@ -36,7 +36,7 @@ const gradients = ['rgba(60,119,74,1) 0%, rgba(0,255,218,1) 100%', 'rgba(60,63,1
 export default function CourseItem(props: any) {
   return (
     <CourseItemContainer>
-      <LinkItem href='/' gradientColor={props.gradient}>
+      <LinkItem href={props.link ? '/courses/'+props.link : '/'} gradientColor={props.gradient}>
         <h3>{props.icon}</h3>
       </LinkItem>
       {props.title ? <LabelItem>{props.title}</LabelItem> : null}

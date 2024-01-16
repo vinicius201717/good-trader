@@ -10,6 +10,7 @@ export default async function handleLogin(req: NextApiRequest, res: NextApiRespo
 
   try {
     const { email, password } = req.body
+
     const response = await prisma.user.findUnique({
       where: {
         email
@@ -40,7 +41,7 @@ export default async function handleLogin(req: NextApiRequest, res: NextApiRespo
     const data = { ...user, role: 'client' }
 
     res.send({
-      userData:  data ,
+      userData: data,
       accessToken: token
     })
   } catch (error) {}

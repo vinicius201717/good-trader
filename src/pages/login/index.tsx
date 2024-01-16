@@ -131,8 +131,8 @@ const LoginPage = () => {
   } = useForm<FormData>({
     mode: 'onBlur',
     defaultValues: {
-      email: 'vcsousa414@gmail.com',
-      password: 'a22k4f99'
+      email: 'juliana@gmail.com',
+      password: 'juliana123'
     },
     resolver: zodResolver(formSchema)
   })
@@ -142,7 +142,11 @@ const LoginPage = () => {
     auth.login({ email, password, rememberMe }, () => {
       setError('email', {
         type: 'manual',
-        message: 'Email or Password is invalid'
+        message: 'Email is invalid'
+      })
+      setError('password', {
+        type: 'manual',
+        message: 'Password is invalid'
       })
     })
   }

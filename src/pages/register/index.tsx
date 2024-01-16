@@ -136,7 +136,7 @@ const Register = () => {
 
   async function handleSignUp(data: formDataType): Promise<void> {
     try {
-      const res = await api.post('/api/auth/create', {
+      const res = await api.post('/auth/create', {
         name: data.name,
         email: data.email,
         phone: data.phone,

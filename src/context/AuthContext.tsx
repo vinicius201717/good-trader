@@ -75,6 +75,10 @@ const AuthProvider = ({ children }: Props) => {
     api
       .post('/auth/login', params)
       .then(async (response: any) => {
+        if (response.status === 204) {
+          return errorCallback && errorCallback({ error: 'Email or Password is invalid' })
+        }
+
         params.rememberMe
           ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
           : null
